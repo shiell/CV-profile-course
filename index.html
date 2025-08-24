@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi CV – One Page</title>
+  <style>
+    /* ===== Paleta y variables ===== */
+    :root{
+      --bg: #0b0f14;
+      --card: rgba(255,255,255,0.08);
+      --muted: #a7b0c0;
+      --text: #e9f1ff;
+      --primary: #7c5cff;  /* violeta */
+      --secondary: #00e0b8; /* turquesa */
+      --accent: #ff6b9a;    /* rosa */
+      --ring: #ffffff24;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+      --radius: 18px;
+      --gap: clamp(14px, 2.5vw, 28px);
+    }
+
+    /* ===== Reset mínimo ===== */
+    *, *::before, *::after{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0; font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #1a1032, transparent),
+        radial-gradient(1000px 700px at 110% 10%, #002a36, transparent),
+        linear-gradient(180deg, #0b0f14 0%, #090d12 100%);
+      letter-spacing:.2px;
+    }
+    a{ color: inherit; text-decoration: none; }
+    img{ max-width: 100%; display:block; }
+
+    /* ===== Layout ===== */
+    .container{ max-width: 1100px; margin: 0 auto; padding: clamp(18px, 3vw, 40px); }
+    .grid{
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: var(--gap);
+    }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--ring);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(16px, 2vw, 26px);
+    }
+
+    /* ===== Header ===== */
+    header.hero{
+      display:flex; align-items: center; gap: 22px; margin-bottom: var(--gap);
+    }
+    .avatar{
+      width: 110px; height:110px; border-radius: 20px; overflow: hidden; flex: 0 0 auto;
+      border: 2px solid #ffffff22; box-shadow: 0 12px 30px rgba(0,0,0,.4);
+    }
+    .title h1{ margin:0; font-size: clamp(28px, 4vw, 40px); font-weight: 800; }
+    .title p{ margin:.25rem 0 0; color: var(--muted); }
+
+    .badges{ display:flex; flex-wrap: wrap; gap:8px; margin-top:10px; }
+    .badge{
+      padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color:#081018; box-shadow: 0 6px 18px rgba(124,92,255,.35);
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar{ display:grid; gap: var(--gap); }
+    .section h3{ margin:0 0 12px; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: #cfd8ff; }
+
+    .contact-list{ display:grid; gap:10px; }
+    .contact-item{ display:flex; align-items:center; gap:10px; padding:10px; border-radius: 12px; background: #ffffff0a; border: 1px solid var(--ring); }
+    .contact-item svg{ width:18px; height:18px; opacity:.9; }
+    .contact-item a:hover{ text-decoration: underline; }
+
+    .skills{ display:flex; flex-wrap: wrap; gap:10px; }
+    .chip{ padding:9px 12px; border-radius:12px; background: #ffffff12; border:1px solid var(--ring); font-weight:600; font-size:13px; }
+    .meter{ height:10px; background:#ffffff12; border-radius:999px; overflow:hidden; border:1px solid var(--ring); }
+    .meter > span{ display:block; height:100%; background: linear-gradient(90deg, var(--secondary), var(--accent)); }
+
+    .langs{ display:grid; gap:10px; }
+    .lang{ display:flex; justify-content:space-between; align-items:center; }
+
+    /* ===== Main content ===== */
+    .main{ display:grid; gap: var(--gap); }
+
+    .about p{ color: var(--muted); line-height: 1.7; }
+
+    .timeline{ display:grid; gap:14px; }
+    .item{ position: relative; padding-left: 22px; }
+    .item::before{ content:""; position:absolute; left:7px; top:6px; width:8px; height:8px; border-radius:50%; background: var(--secondary); box-shadow: 0 0 0 4px #00e0b822; }
+    .item h4{ margin:0 0 6px; font-size: 18px; }
+    .item .meta{ color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+
+    .projects{ display:grid; grid-template-columns: repeat( auto-fit, minmax(240px, 1fr) ); gap: var(--gap); }
+    .project{
+      border-radius: 16px; border:1px solid var(--ring); overflow:hidden; background:#ffffff08;
+      transition: transform .2s ease, box-shadow .2s ease; position: relative;
+    }
+    .project:hover{ transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+    .project .thumb{ aspect-ratio: 16/9; background: linear-gradient(135deg, #2a1f5e, #153342); display:flex; align-items:center; justify-content:center; font-weight:800; letter-spacing:.08em; color:#fff; }
+    .project .body{ padding:14px; }
+    .project .tags{ display:flex; flex-wrap: wrap; gap:8px; margin-top:10px; }
+    .tag{ font-size:12px; padding:6px 8px; border:1px solid var(--ring); border-radius: 999px; background:#ffffff12; }
+
+    .footer{
+      margin-top: var(--gap); text-align:center; color: var(--muted); font-size: 13px;
+    }
+
+    /* ===== Botón de descarga ===== */
+    .actions{ margin-top: 10px; display:flex; gap:12px; flex-wrap:wrap; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius: 12px; font-weight:700;
+      background: linear-gradient(90deg, var(--primary), var(--accent)); color:#05070b; border:none; cursor:pointer;
+      box-shadow: 0 10px 24px rgba(124,92,255,.35); transition: transform .15s ease;
+    }
+    .btn:hover{ transform: translateY(-2px); }
+
+    /* ===== Imprimir (PDF) ===== */
+    @media print{
+      body{ background: white; }
+      .card{ background: white; border-color:#ddd; box-shadow:none; }
+      .btn, .actions{ display:none !important; }
+      .project:hover{ transform:none; box-shadow:none; }
+      .footer{ color:#333; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HERO -->
+    <header class="hero card">
+      <div class="avatar">
+        <!-- Reemplaza la imagen por tu foto -->
+        <img src="https://picsum.photos/220?grayscale" alt="Foto de perfil" />
+      </div>
+      <div class="title">
+        <h1>Adiv Brander Cari QUispe</h1>
+        <p>Ingeniero de Sistemas • Redes & Dev • Linux | Seguridad • Desarrollo Web</p>
+        <div class="badges">
+          <span class="badge">Disponible para proyectos</span>
+          <span class="badge" style="background:linear-gradient(90deg,var(--secondary),var(--accent))">Remoto / Presencial</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="#contacto" title="Contactar">
+            <!-- Icono sobre - carta -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.4l-10 6.25L2 6.4V6Zm0 2.62V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.62l-9.35 5.84a2 2 0 0 1-2.3 0L2 8.62Z"/></svg>
+            Contáctame
+          </a>
+          <button class="btn" onclick="window.print()" title="Imprimir / Guardar PDF">
+            <!-- Icono imprimir -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h12v4H6V2Zm12 6H6a4 4 0 0 0-4 4v4h4v4h12v-4h4v-4a4 4 0 0 0-4-4Zm0 10H6v-6h12v6Z"/></svg>
+            Imprimir / PDF
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <section class="section card">
+          <h3>Contacto</h3>
+          <div class="contact-list">
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713 1.2 6h21.6L12 12.713ZM12 14.9l10.8-6.713V18a2 2 0 0 1-2 2H3.2a2 2 0 0 1-2-2V8.187L12 14.9Z"/></svg>
+              <a href="mailto:tucorreo@dominio.com">adivcari54@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.463 15.463 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.3.57 3.53.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.23.2 2.42.57 3.53a1 1 0 0 1-.24 1.01l-2.2 2.2Z"/></svg>
+              <a href="tel:+51999999999">+51 914746526</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a8 8 0 0 1 8 8c0 5.25-8 12-8 12S4 15.25 4 10a8 8 0 0 1 8-8Zm0 10.5A2.5 2.5 0 1 0 12 7a2.5 2.5 0 0 0 0 5.5Z"/></svg>
+              <span>Puno, Perú</span>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.011-1.041-.017-2.045-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.303-5.467-1.333-5.467-5.932 0-1.31.469-2.381 1.236-3.221-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.51 11.51 0 0 1 6.002 0c2.292-1.552 3.298-1.23 3.298-1.23.655 1.652.243 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.807 5.625-5.48 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .321.216.694.825.576C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297Z"/></svg>
+              <a href="https://github.com/tuusuario" target="_blank" rel="noreferrer">github.com/shiell</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v16H4V4Zm8.5 4.75c0-1.14.92-2.06 2.06-2.06 1.13 0 2.05.92 2.05 2.06 0 1.13-.92 2.05-2.05 2.05A2.06 2.06 0 0 1 12.5 8.75ZM6 18l5.33-6.22 3.78 4.54L17.5 13 20 18H6Z"/></svg>
+              <a href="https://www.linkedin.com/in/tuusuario" target="_blank" rel="noreferrer">linkedin.com/in/Ab_shiell</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section card">
+          <h3>Habilidades</h3>
+          <div class="skills">
+            <span class="chip">Cisco Switching</span>
+            <span class="chip">VLAN / LACP</span>
+            <span class="chip">Fortinet</span>
+            <span class="chip">Linux</span>
+            <span class="chip">Laravel</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">Proxmox</span>
+            <span class="chip">Ntopng</span>
+            <span class="chip">Wazuh</span>
+          </div>
+          <div style="margin-top:14px; display:grid; gap:10px">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--muted)">
+                <span>Redes</span><span>90%</span>
+              </div>
+              <div class="meter"><span style="width:90%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--muted)">
+                <span>Dev Backend</span><span>70%</span>
+              </div>
+              <div class="meter"><span style="width:70%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--muted)">
+                <span>Seguridad</span><span>65%</span>
+              </div>
+              <div class="meter"><span style="width:65%"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section card">
+          <h3>Idiomas</h3>
+          <div class="langs">
+            <div class="lang"><span>Español</span><strong>C2</strong></div>
+            <div class="lang"><span>Inglés</span><strong>B2</strong></div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <section class="about card">
+          <h3>Sobre mí</h3>
+          <p>
+            Profesional de TI orientado a resultados, con foco en redes, seguridad y desarrollo web.
+            Me apasiona diseñar infraestructuras robustas, automatizar procesos y crear herramientas
+            que hacen la vida más fácil a los equipos. Disfruto compartir conocimiento dictando
+            cursos prácticos y colaborando en proyectos de impacto.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Experiencia</h3>
+          <div class="timeline">
+            <div class="item">
+              <h4>Administrador de Redes – Oficina de TI</h4>
+              <div class="meta">Universidad X · 2023 — Presente · Puno, Perú</div>
+              <p class="desc">Gestión de Core Switching (Cisco/Huawei), optimización de más de 300 VLANs, monitoreo
+                de rendimiento y troubleshooting de latencias entre segmentos. Integración con firewall Fortinet.</p>
+            </div>
+            <div class="item">
+              <h4>Docente / Instructor – Fundamentos de Redes y Servidores</h4>
+              <div class="meta">Freelance · 2024 — 2025</div>
+              <p class="desc">Curso práctico de 3 días: VLANs, Port‑Channels, Proxmox, servicios virtualizados, monitoreo con Ntopng y procedimientos de recuperación en switches.</p>
+            </div>
+            <div class="item">
+              <h4>Desarrollador Backend – Proyecto Laravel</h4>
+              <div class="meta">2024</div>
+              <p class="desc">Sistema de registro de incidencias, generación de reportes (Excel/PDF), arquitectura MVC, relaciones One‑to‑Many, migraciones y despliegue en Ubuntu.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Educación</h3>
+          <div class="timeline">
+            <div class="item">
+              <h4>Ingeniería de Sistemas e Informática</h4>
+              <div class="meta">Universidad Nacional del Altiplano · 2020 — 2025</div>
+              <p class="desc">Líneas: redes, seguridad, desarrollo web y automatización. Tesis convertida a artículo científico (IMRYD).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Proyectos</h3>
+          <div class="projects">
+            <article class="project">
+              <div class="thumb">NMS Campus</div>
+              <div class="body">
+                <h4>Monitoreo de red para campus</h4>
+                <p class="desc">Top‑Talkers, ancho de banda y flujos por VLAN usando Ntopng y port‑mirror en switch core.</p>
+                <div class="tags"><span class="tag">Ntopng</span><span class="tag">SNMP</span><span class="tag">Dashboards</span></div>
+              </div>
+            </article>
+            <article class="project">
+              <div class="thumb">Incidencias</div>
+              <div class="body">
+                <h4>Registro de incidencias</h4>
+                <p class="desc">Aplicación Laravel para registrar, escalar y reportar incidencias de TI en campus universitario.</p>
+                <div class="tags"><span class="tag">Laravel 10</span><span class="tag">MySQL</span><span class="tag">Blade</span></div>
+              </div>
+            </article>
+            <article class="project">
+              <div class="thumb">Wazuh SIEM</div>
+              <div class="body">
+                <h4>Monitoreo de seguridad</h4>
+                <p class="desc">Despliegue de Wazuh para visibilidad de endpoints, reglas y alertas en tiempo real.</p>
+                <div class="tags"><span class="tag">Wazuh</span><span class="tag">Elastic</span><span class="tag">Linux</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card" id="contacto">
+          <h3>Contacto</h3>
+          <p class="desc">¿Hablamos? Estoy abierto a oportunidades de colaboración, consultoría y enseñanza.</p>
+          <div class="contact-list" style="margin-top:10px">
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713 1.2 6h21.6L12 12.713ZM12 14.9l10.8-6.713V18a2 2 0 0 1-2 2H3.2a2 2 0 0 1-2-2V8.187L12 14.9Z"/></svg>
+              <a href="mailto:tucorreo@dominio.com">adivcari54@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.463 15.463 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.3.57 3.53.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.23.2 2.42.57 3.53a1 1 0 0 1-.24 1.01l-2.2 2.2Z"/></svg>
+              <a href="tel:+51999999999">+51 914746526</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">© 2025 • Tu Adiv // Attilus • Hecho con HTML & CSS</div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
